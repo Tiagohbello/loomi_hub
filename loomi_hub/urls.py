@@ -16,7 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.static import static
+
+from loomi_hub import settings
+from loomi_hub.configuration.openapi import urls_openapi
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+] + urls_openapi + static(settings.STATIC_URL)
