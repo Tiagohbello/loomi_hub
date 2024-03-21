@@ -47,7 +47,11 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
     'drf_yasg',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+
+    #instaled apps
+    'loomi_hub.chat',
+    'loomi_hub.post'
 ]
 
 MIDDLEWARE = [
