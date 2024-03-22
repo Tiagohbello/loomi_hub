@@ -51,7 +51,8 @@ INSTALLED_APPS = [
 
     #instaled apps
     'loomi_hub.chat',
-    'loomi_hub.post'
+    'loomi_hub.post',
+    'loomi_hub.user'
 ]
 
 MIDDLEWARE = [
@@ -198,6 +199,8 @@ SWAGGER_SETTINGS = {
             'name': 'Authorization'
         }
     },
-    'DEFAULT_AUTO_SCHEMA_CLASS': 'soph_forum.configuration.default_schema.ReadWriteAutoSchema',
+    'DEFAULT_AUTO_SCHEMA_CLASS': 'loomi_hub.configuration.default_schema.ReadWriteAutoSchema',
     'DEFAULT_MODEL_RENDERING': 'example'
 }
+
+AUTH_USER_MODEL = 'user.User'
