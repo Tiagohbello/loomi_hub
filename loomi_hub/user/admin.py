@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from loomi_hub.user.models import User
+
+
+@admin.register(User)
+class AdminUser(admin.ModelAdmin):
+    list_display = ('username', 'email', 'is_active')
