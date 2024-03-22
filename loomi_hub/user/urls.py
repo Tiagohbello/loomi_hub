@@ -15,7 +15,6 @@ from loomi_hub.user.apis.viewsets import (
 )
 
 drf_router = DefaultRouter()
-# drf_router.register(r"", UserViewSet)
 drf_router.register(r"sign_up", SignUpView, basename="sign_up")
 drf_router.register(r"", UserViewSet, basename="user")
 
