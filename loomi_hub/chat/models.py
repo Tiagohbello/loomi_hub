@@ -13,25 +13,6 @@ class Conversation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
-class Message(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    conversation = models.ForeignKey(
-        Conversation, on_delete=models.CASCADE, related_name="messages"
-    )
-    content = models.TextField()
-    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name="messages")
-
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def save(self):
-        if not ConversationParticipant.objects.filter(
-            user=self.user, conversation=self.conversation
-        ):
-            raise ValidationError(
-                "This user cannot send a message to this conversation."
-            )
-
-
 class ConversationParticipant(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     conversation = models.ForeignKey(
@@ -39,6 +20,16 @@ class ConversationParticipant(models.Model):
     )
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="conversations"
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class Message(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    content = models.TextField()
+    conversation_participant = models.ForeignKey(
+        ConversationParticipant, on_delete=models.PROTECT, related_name="messages"
     )
 
     created_at = models.DateTimeField(auto_now_add=True)

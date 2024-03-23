@@ -19,4 +19,4 @@ class ConversationAdmin(admin.ModelAdmin):
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ("conversation", "user", "content")
+    list_display = ("conversation_participant", "content")

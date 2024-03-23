@@ -26,7 +26,8 @@ urlpatterns = (
     [
         path("admin/", admin.site.urls),
         path("user/", include("loomi_hub.user.urls")),
-        path("post/", include("loomi_hub.post.urls"))
+        path("post/", include("loomi_hub.post.urls")),
+        path("chat/", include("loomi_hub.chat.urls")),
     ]
     + urls_openapi
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
