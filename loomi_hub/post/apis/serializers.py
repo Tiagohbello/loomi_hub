@@ -1,6 +1,7 @@
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
-from loomi_hub.post.models import Post, Comment
+from loomi_hub.post.models import Post, Comment, Like
 from loomi_hub.user.apis.serializers import UserSerializer
 
 
@@ -45,8 +46,7 @@ class CommentSerializer(serializers.ModelSerializer):
         user = self.context["request"].user
         post = Post.objects.filter(id=self.context["post_id"]).first()
         validated_data["user"] = user
-        if post:
-            validated_data["post"] = post
+        validated_data["post"] = post
         return super().create(validated_data)
 
     def to_representation(self, instance):
@@ -54,4 +54,37 @@ class CommentSerializer(serializers.ModelSerializer):
         representation["user"] = (
             UserSerializer(instance.user).data if representation["user"] else None
         )
+        return representation
+
+
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Like
+        fields = "__all__"
+        extra_kwargs = {"user": {"read_only": True}, "post": {"read_only": True}}
+
+    def create(self, validated_data):
+        user = self.context["request"].user
+        post_id = self.context["post_id"]
+        post = Post.objects.filter(id=post_id).first()
+
+        # Verifique se o like já existe
+        if Like.objects.filter(user=user, post=post).exists():
+            raise ValidationError("The user already likes this post")
+
+        validated_data["user"] = user
+        validated_data["post"] = post
+
+        return super().create(validated_data)
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+
+        representation["user"] = (
+            UserSerializer(instance.user).data if representation["user"] else None
+        )
+        representation["post"] = (
+            PostSerializer(instance.post).data if representation["post"] else None
+        )
+
         return representation
