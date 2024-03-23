@@ -1,6 +1,7 @@
 import django_filters
+from django.db.models import Prefetch
 
-from loomi_hub.chat.models import Conversation, Message
+from loomi_hub.chat.models import Conversation, Message, ConversationParticipant
 
 
 class ConversationFilter(django_filters.FilterSet):
@@ -11,15 +12,26 @@ class ConversationFilter(django_filters.FilterSet):
         fields = []
 
     def filter_by_user(self, queryset, name, value):
-        return queryset.filter(users__user_id=value)
+        return queryset.prefetch_related(
+            Prefetch(
+                "users", queryset=ConversationParticipant.objects.select_related("user")
+            )
+        ).filter(users__user_id=value)
 
 
 class MessageFilter(django_filters.FilterSet):
-    conversation = django_filters.UUIDFilter(method="filter_by_conversation", required=True)
+    conversation = django_filters.UUIDFilter(
+        method="filter_by_conversation", required=True
+    )
 
     class Meta:
         model = Message
         fields = []
 
     def filter_by_conversation(self, queryset, name, value):
-        return queryset.filter(conversation_participant__conversation_id=value)
+        return queryset.prefetch_related(
+            Prefetch(
+                "conversation_participant",
+                queryset=ConversationParticipant.objects.select_related("conversation"),
+            )
+        ).filter(conversation_participant__conversation_id=value)
