@@ -17,7 +17,7 @@ from loomi_hub.post.models import Post, Comment, Like
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().order_by("-created_at").select_related("user")
     serializer_class = PostSerializer
     parser_classes = (MultiPartParser, FormParser)
     authentication_classes = [JWTAuthentication]
@@ -26,15 +26,18 @@ class PostViewSet(viewsets.ModelViewSet):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     http_method_names = ["get", "post", "put", "delete"]
 
     def get_queryset(self):
+        queryset = self.queryset
         post_id = self.kwargs.get("post_id")
         if post_id:
-            return Comment.objects.filter(post__id=post_id)
+            queryset = queryset.filter(post__id=post_id)
+        return queryset.select_related("user", "post")
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
@@ -43,15 +46,18 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 class LikeViewSet(viewsets.ModelViewSet):
+    queryset = Like.objects.all()
     serializer_class = LikeSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     http_method_names = ["get", "post", "delete"]
 
     def get_queryset(self):
+        queryset = self.queryset
         post_id = self.kwargs.get("post_id")
         if post_id:
-            return Like.objects.filter(post__id=post_id)
+            queryset = queryset.filter(post__id=post_id)
+        return queryset.select_related("user", "post")
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
