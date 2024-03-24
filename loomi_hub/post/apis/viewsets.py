@@ -1,3 +1,5 @@
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -14,6 +16,7 @@ from loomi_hub.post.apis.serializers import (
     LikeSerializer,
 )
 from loomi_hub.post.models import Post, Comment, Like
+from loomi_hub.post.utils.notification_sender import send_notification
 
 
 class PostViewSet(viewsets.ModelViewSet):
