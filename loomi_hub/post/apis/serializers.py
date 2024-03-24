@@ -11,7 +11,11 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = "__all__"
-        extra_kwargs = {"user": {"read_only": True}, "created_at": {"read_only": True}}
+        extra_kwargs = {
+            "user": {"read_only": True},
+            "created_at": {"read_only": True},
+            "thumbnail": {"read_only": True},
+        }
 
     def validate(self, attrs):
         if not attrs.get("image") and not attrs.get("content"):
