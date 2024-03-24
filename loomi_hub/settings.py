@@ -220,7 +220,6 @@ CHANNEL_LAYERS = {
 
 
 CORS_ALLOW_ALL_ORIGINS = True
-ALLOWED_HOSTS = ["*"]
 
 
 WSGI_APPLICATION = 'loomi_hub.wsgi.app'
