@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     # admin themes
     "admin_interface",
     "colorfield",
@@ -46,6 +47,8 @@ INSTALLED_APPS = [
     # third party apps,
     "django_filters",
     "rest_framework",
+    "corsheaders",
+    'channels',
     "drf_yasg",
     "rest_framework_simplejwt",
     # instaled apps
@@ -57,6 +60,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -201,3 +205,19 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "mediafiles")
 
 # URL used to access the media
 MEDIA_URL = "/media/"
+
+
+ASGI_APPLICATION = "loomi_hub.asgi.application"
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
+
+CORS_ALLOW_ALL_ORIGINS = True
+ALLOWED_HOSTS = ["*"]
