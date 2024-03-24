@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from loomi_hub.post.models import Post, Comment, Like
+from loomi_hub.post.utils.notification_sender import send_notification
 from loomi_hub.user.apis.serializers import UserSerializer
 
 
@@ -22,6 +23,7 @@ class PostSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = self.context["request"].user
         validated_data["user"] = user
+        send_notification(f"{user.username} just added a post")
         return super().create(validated_data)
 
     def to_representation(self, instance):
@@ -47,6 +49,7 @@ class CommentSerializer(serializers.ModelSerializer):
         post = Post.objects.filter(id=self.context["post_id"]).first()
         validated_data["user"] = user
         validated_data["post"] = post
+        send_notification(f"{user.username} just commented on a post")
         return super().create(validated_data)
 
     def to_representation(self, instance):
@@ -74,7 +77,7 @@ class LikeSerializer(serializers.ModelSerializer):
 
         validated_data["user"] = user
         validated_data["post"] = post
-
+        send_notification(f"{user.username} just liked a post")
         return super().create(validated_data)
 
     def to_representation(self, instance):
