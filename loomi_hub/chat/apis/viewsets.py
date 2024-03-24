@@ -8,16 +8,16 @@ from loomi_hub.chat.models import Conversation, Message
 
 
 class ConversationViewSet(viewsets.ModelViewSet):
-    queryset = Conversation.objects.all()
+    queryset = Conversation.objects.all().order_by('-created_at')
     serializer_class = ConversationSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     filterset_class = ConversationFilter
-    http_method_names = ["get"]
+    http_method_names = ["get", "post"]
 
 
 class MessageViewSet(viewsets.ModelViewSet):
-    queryset = Message.objects.all()
+    queryset = Message.objects.all().order_by('-created_at')
     serializer_class = MessageSerializer
     filterset_class = MessageFilter
     authentication_classes = [JWTAuthentication]
