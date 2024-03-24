@@ -13,8 +13,9 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.security.websocket import AllowedHostsOriginValidator
 from django.core.asgi import get_asgi_application
 
-from loomi_hub.chat import routing
+from loomi_hub.chat.routing import chat_websocket_urlpatterns
 from loomi_hub.middlewares import TokenAuthMiddleware
+from loomi_hub.post.routing import post_websocket_urlpatterns
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "loomi_hub.settings")
 
@@ -22,7 +23,9 @@ application = ProtocolTypeRouter(
     {
         "http": get_asgi_application(),
         "websocket": AllowedHostsOriginValidator(
-            TokenAuthMiddleware(URLRouter(routing.websocket_urlpatterns))
+            TokenAuthMiddleware(
+                URLRouter(chat_websocket_urlpatterns + post_websocket_urlpatterns)
+            )
         ),
     }
 )
