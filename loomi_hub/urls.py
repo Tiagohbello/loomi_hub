@@ -22,9 +22,12 @@ from django.conf.urls.static import static
 from loomi_hub import settings
 from loomi_hub.configuration.openapi import urls_openapi
 
+
+
 urlpatterns = (
     [
         path("admin/", admin.site.urls),
+        path("", admin.site.urls),
         path("user/", include("loomi_hub.user.urls")),
         path("post/", include("loomi_hub.post.urls")),
         path("chat/", include("loomi_hub.chat.urls")),
