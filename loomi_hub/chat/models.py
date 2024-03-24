@@ -44,6 +44,7 @@ class ConversationParticipant(models.Model):
         self.conversation.update_group_status()
 
 
+
 class Message(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     content = models.TextField()
