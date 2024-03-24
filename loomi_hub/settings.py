@@ -207,7 +207,7 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "mediafiles")
 MEDIA_URL = "/media/"
 
 
-ASGI_APPLICATION = "loomi_hub.asgi.application"
+ASGI_APPLICATION = "loomi_hub.asgi.app"
 
 CHANNEL_LAYERS = {
     'default': {
