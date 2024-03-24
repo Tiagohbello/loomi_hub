@@ -2,6 +2,8 @@ from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
 
+from rest_framework.exceptions import ValidationError
+
 from .apis.serializers import MessageSerializer
 from .models import ConversationParticipant, Message
 
@@ -9,14 +11,17 @@ from .models import ConversationParticipant, Message
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.conversation_id = self.scope["url_route"]["kwargs"]["id"]
-        self.user = self.scope["user"]
-        if await self.is_user_in_conversation():
-            await self.channel_layer.group_add(
-                self.conversation_group_name(), self.channel_name
-            )
-            await self.accept()
+        self.user = self.scope.get("user")
+        if self.user:
+            if await self.is_user_in_conversation():
+                await self.channel_layer.group_add(
+                    self.conversation_group_name(), self.channel_name
+                )
+                await self.accept()
+            else:
+                await self.close()
         else:
-            await self.close()
+            return ValidationError("User not found")
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(

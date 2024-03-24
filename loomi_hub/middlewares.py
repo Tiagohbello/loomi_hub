@@ -25,6 +25,8 @@ class TokenAuthMiddleware(BaseMiddleware):
         headers = dict(scope["headers"])
         if b"authorization" in headers:
             token_name, token_key = headers[b"authorization"].decode().split()
-            if token_name == "Bearer":  # JWTs geralmente usam o prefixo 'Bearer'
-                scope["user"] = await get_user_from_jwt(token_key)
+            if token_name == "Bearer":
+                user = await get_user_from_jwt(token_key)
+                if isinstance(user, get_user_model()):
+                    scope["user"] = user
         return await super().__call__(scope, receive, send)
