@@ -11,7 +11,7 @@ click==8.1.7
 constantly==23.10.4
 cryptography==42.0.5
 daphne==4.1.0
-Django~=5.0.3
+Django==4.2.11
 django-admin-interface==0.28.6
 django-colorfield==0.11.0
 django-cors-headers==4.3.1
