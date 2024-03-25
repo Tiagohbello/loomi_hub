@@ -3,6 +3,8 @@ from drf_yasg import openapi
 from rest_framework import permissions
 from django.urls import path
 
+from loomi_hub.configuration.default_schema import BothHttpAndHttpsSchemaGenerator
+
 schema_view = get_schema_view(
     openapi.Info(
         title="loomi Hub API",
@@ -10,6 +12,7 @@ schema_view = get_schema_view(
         description="Welcome to loomi Hub API Docs",
     ),
     public=True,
+    generator_class=BothHttpAndHttpsSchemaGenerator,  # Here
     permission_classes=[permissions.AllowAny],
 
 )

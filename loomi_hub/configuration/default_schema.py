@@ -56,3 +56,10 @@ class ReadWriteAutoSchema(SwaggerAutoSchema):
 
         new_serializer = CustomSerializer(data=serializer.data)
         return new_serializer
+
+
+class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
+    def get_schema(self, request=None, public=False):
+        schema = super().get_schema(request, public)
+        schema.schemes = ["http", "https"]
+        return schema
