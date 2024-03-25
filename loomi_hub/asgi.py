@@ -27,7 +27,8 @@ application = ProtocolTypeRouter(
         "websocket": AllowedHostsOriginValidator(
             TokenAuthMiddleware(
                 URLRouter(chat_websocket_urlpatterns + post_websocket_urlpatterns)
-            )
+            ),
+            ["*"]
         ),
     }
 )
