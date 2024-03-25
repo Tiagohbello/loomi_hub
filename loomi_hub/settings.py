@@ -28,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=True)
 
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -202,17 +202,16 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "mediafiles")
 # URL used to access the media
 MEDIA_URL = "/media/"
 
-ASGI_APPLICATION = "loomi_hub.asgi.app"
+ASGI_APPLICATION = "loomi_hub.asgi.application"
 
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [(config("REDIS_URL"))],
+            "hosts": [(config("REDIS_URL"), config("REDIS_PORT"))],
         },
     },
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-WSGI_APPLICATION = 'loomi_hub.wsgi.app'
