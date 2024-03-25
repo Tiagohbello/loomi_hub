@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # third party apps,
+    'whitenoise.runserver_nostatic',
     "django_filters",
     "rest_framework",
     "corsheaders",
@@ -59,6 +60,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -207,12 +209,10 @@ ASGI_APPLICATION = "loomi_hub.asgi.application"
 
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [(config("REDIS_URL"), config("REDIS_PORT"))],
-        },
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
     },
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
