@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 # Application definition
 
 INSTALLED_APPS = [
-    # 'daphne',
+    'daphne',
     # admin themes
     "admin_interface",
     "colorfield",
@@ -213,7 +213,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [(config("REDIS_SERVER_NAME"), config("REDIS_PORT"))],
+            "hosts": [(config("REDIS_URL"))],
         },
     },
 }
