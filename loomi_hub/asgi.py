@@ -28,7 +28,6 @@ application = ProtocolTypeRouter(
             TokenAuthMiddleware(
                 URLRouter(chat_websocket_urlpatterns + post_websocket_urlpatterns)
             ),
-            ["*"]
         ),
     }
 )
