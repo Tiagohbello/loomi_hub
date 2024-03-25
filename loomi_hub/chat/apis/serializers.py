@@ -26,6 +26,13 @@ class ConversationSerializer(serializers.ModelSerializer):
         model = Conversation
         fields = "__all__"
 
+    def create(self, validated_data):
+        users_data = validated_data.pop('users')
+        conversation = Conversation.objects.create(**validated_data)
+        for user_data in users_data:
+            ConversationParticipant.objects.create(conversation=conversation, **user_data)
+        return conversation
+
 
 class MessageSerializer(serializers.ModelSerializer):
     conversation_participant = ConversationParticipantSerializer(read_only=True)
