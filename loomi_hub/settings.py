@@ -28,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=True)
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 
 # Application definition
 
@@ -141,7 +141,6 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
@@ -176,7 +175,6 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 
-
 REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": [
         "django_filters.rest_framework.DjangoFilterBackend",
@@ -188,7 +186,6 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 50,
 }
 
-
 SWAGGER_SETTINGS = {
     "SECURITY_DEFINITIONS": {
         "api_key": {"type": "apiKey", "in": "header", "name": "Authorization"}
@@ -199,13 +196,11 @@ SWAGGER_SETTINGS = {
 
 AUTH_USER_MODEL = "user.User"
 
-
 # Actual directory user files go to
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "mediafiles")
 
 # URL used to access the media
 MEDIA_URL = "/media/"
-
 
 ASGI_APPLICATION = "loomi_hub.asgi.app"
 
@@ -218,8 +213,6 @@ CHANNEL_LAYERS = {
     },
 }
 
-
 CORS_ALLOW_ALL_ORIGINS = True
-
 
 WSGI_APPLICATION = 'loomi_hub.wsgi.app'

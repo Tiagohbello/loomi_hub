@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "loomi_hub/asgi.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "loomi_hub/asgi.py"
+    }
+  ]
+}
