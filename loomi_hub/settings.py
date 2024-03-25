@@ -220,10 +220,10 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
     'https://loomihub-production.up.railway.app',
-    "http://loomihub-production.up.railway.app",
+    "http://loomihub-production.up.railway.app/api/swagger",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://loomihub-production.up.railway.app',
-    "http://loomihub-production.up.railway.app",
+    "http://loomihub-production.up.railway.app/api/swagger",
 ]
