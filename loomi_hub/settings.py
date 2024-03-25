@@ -213,6 +213,9 @@ CHANNEL_LAYERS = {
     },
 }
 
-CORS_ALLOW_ALL_ORIGINS = True
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
+CORS_ALLOW_ALL_ORIGINS = True
+CSRF_COOKIE_SECURE = True
+
+CSRF_TRUSTED_ORIGINS = ['https://loomihub-production.up.railway.app']
