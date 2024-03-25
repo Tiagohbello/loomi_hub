@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 # Application definition
 
 INSTALLED_APPS = [
-    'daphne',
+    # 'daphne',
     # admin themes
     "admin_interface",
     "colorfield",
