@@ -1,5 +1,6 @@
 from collections import OrderedDict
 
+from drf_yasg.generators import OpenAPISchemaGenerator
 from drf_yasg.inspectors import SwaggerAutoSchema
 from drf_yasg.utils import no_body
 

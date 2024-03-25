@@ -219,3 +219,8 @@ CORS_ALLOW_ALL_ORIGINS = True
 CSRF_COOKIE_SECURE = True
 
 CSRF_TRUSTED_ORIGINS = ['https://loomihub-production.up.railway.app']
+
+CORS_ALLOWED_ORIGINS = [
+    "https://loomihub-production.up.railway.app",
+    "http://loomihub-production.up.railway.app"
+]
