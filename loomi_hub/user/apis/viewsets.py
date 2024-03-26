@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenBlacklistView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenBlacklistView, TokenRefreshView
 
 from loomi_hub.configuration.default_schema import Request
 from loomi_hub.user.apis.serializers import (
@@ -28,16 +28,17 @@ class SignUpView(viewsets.ModelViewSet):
 class LoginView(TokenObtainPairView):
     serializer_class = LoginSerializer
     user = None
+    my_tags = ['authentication']
 
-    @swagger_auto_schema(method="post", tags=["login"])
-    @action(methods=["post"], detail=False)
     def post(self, request: Request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 
 
-class LogoutViewSet(TokenBlacklistView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+class RefrashView(TokenRefreshView):
+    my_tags = ['authentication']
+
+    def post(self, request: Request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
 
 
 class UserViewSet(viewsets.ModelViewSet):

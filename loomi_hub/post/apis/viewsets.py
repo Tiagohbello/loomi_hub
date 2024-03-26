@@ -34,6 +34,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     http_method_names = ["get", "post", "put", "delete"]
+    my_tags = ['comment']
 
     def get_queryset(self):
         queryset = self.queryset
@@ -54,6 +55,7 @@ class LikeViewSet(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     http_method_names = ["get", "post", "delete"]
+    my_tags = ['like']
 
     def get_queryset(self):
         queryset = self.queryset
