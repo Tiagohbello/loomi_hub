@@ -9,9 +9,8 @@ from rest_framework_simplejwt.views import (
 from loomi_hub.user.apis.viewsets import (
     SignUpView,
     LoginView,
-    LogoutViewSet,
     UserViewSet,
-    ChangePasswordView,
+    ChangePasswordView, RefrashView,
 )
 
 drf_router = DefaultRouter()
@@ -20,7 +19,7 @@ drf_router.register(r"", UserViewSet, basename="user")
 
 urlpatterns = [
     path("login/", LoginView.as_view(), name="login"),
-    path("login/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("login/refresh/", RefrashView.as_view(), name="login_refresh"),
     path("password/change/", ChangePasswordView.as_view(), name="change_password"),
     path("", include(drf_router.urls)),
 ]

@@ -57,6 +57,13 @@ class ReadWriteAutoSchema(SwaggerAutoSchema):
         new_serializer = CustomSerializer(data=serializer.data)
         return new_serializer
 
+    def get_tags(self, operation_keys=None):
+        tags = self.overrides.get('tags', None) or getattr(self.view, 'my_tags', [])
+        if not tags:
+            tags = [operation_keys[0]]
+
+        return tags
+
 
 class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
     def get_schema(self, request=None, public=False):
