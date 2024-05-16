@@ -15,8 +15,3 @@ Loomi Hub is a project that combines the best practices of Back end development 
 - Configure your PostgreSQL database
 - Add the required environment variables
 - Run the command: `daphne loomi_hub.asgi:application`
-
-
-## routes for the websocket API:
-- ws://loomihub-production.up.railway.app/ws/chat/<id>/
-- ws://loomihub-production.up.railway.app/ws/notifications/
